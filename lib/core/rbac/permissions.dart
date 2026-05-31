@@ -1,0 +1,122 @@
+import 'app_role.dart';
+
+/// Discrete capabilities. Screens/widgets must NEVER hardcode role checks —
+/// they ask [RbacService] whether the current user holds a permission.
+enum AppPermission {
+  viewHome,
+  give,
+  viewOwnGiving,
+  registerForEvents,
+  viewOwnSchedule,
+  serve,
+  // Leadership / admin
+  manageSchedule,
+  manageEvents,
+  managePeople,
+  viewVisitorLeads,
+  manageVisitorLeads,
+  manageMedia,
+  viewReports,
+  manageSettings,
+  // Finance
+  viewFinance,
+  manageFinance,
+  // System
+  manageOrganization,
+}
+
+/// Permission matrix. Each role grants a set of capabilities; a user's
+/// effective permissions are the union across all their roles.
+const Map<AppRole, Set<AppPermission>> kRolePermissions = {
+  AppRole.superAdmin: {...AppPermission.values},
+  AppRole.leadPastor: {
+    AppPermission.viewHome,
+    AppPermission.give,
+    AppPermission.viewOwnGiving,
+    AppPermission.registerForEvents,
+    AppPermission.viewOwnSchedule,
+    AppPermission.serve,
+    AppPermission.manageSchedule,
+    AppPermission.manageEvents,
+    AppPermission.managePeople,
+    AppPermission.viewVisitorLeads,
+    AppPermission.manageVisitorLeads,
+    AppPermission.manageMedia,
+    AppPermission.viewReports,
+    AppPermission.manageSettings,
+    AppPermission.viewFinance,
+  },
+  AppRole.admin: {
+    AppPermission.viewHome,
+    AppPermission.give,
+    AppPermission.viewOwnGiving,
+    AppPermission.registerForEvents,
+    AppPermission.viewOwnSchedule,
+    AppPermission.serve,
+    AppPermission.manageSchedule,
+    AppPermission.manageEvents,
+    AppPermission.managePeople,
+    AppPermission.viewVisitorLeads,
+    AppPermission.manageVisitorLeads,
+    AppPermission.viewReports,
+    AppPermission.manageSettings,
+  },
+  AppRole.financialLeader: {
+    AppPermission.viewHome,
+    AppPermission.give,
+    AppPermission.viewOwnGiving,
+    AppPermission.registerForEvents,
+    AppPermission.viewOwnSchedule,
+    AppPermission.viewFinance,
+    AppPermission.manageFinance,
+    AppPermission.viewReports,
+  },
+  AppRole.treasurer: {
+    AppPermission.viewHome,
+    AppPermission.give,
+    AppPermission.viewOwnGiving,
+    AppPermission.viewFinance,
+    AppPermission.manageFinance,
+    AppPermission.viewReports,
+  },
+  AppRole.mediaLeader: {
+    AppPermission.viewHome,
+    AppPermission.give,
+    AppPermission.viewOwnGiving,
+    AppPermission.registerForEvents,
+    AppPermission.viewOwnSchedule,
+    AppPermission.serve,
+    AppPermission.manageSchedule,
+    AppPermission.manageMedia,
+    AppPermission.manageEvents,
+  },
+  AppRole.ministryLeader: {
+    AppPermission.viewHome,
+    AppPermission.give,
+    AppPermission.viewOwnGiving,
+    AppPermission.registerForEvents,
+    AppPermission.viewOwnSchedule,
+    AppPermission.serve,
+    AppPermission.manageSchedule,
+    AppPermission.manageEvents,
+  },
+  AppRole.volunteer: {
+    AppPermission.viewHome,
+    AppPermission.give,
+    AppPermission.viewOwnGiving,
+    AppPermission.registerForEvents,
+    AppPermission.viewOwnSchedule,
+    AppPermission.serve,
+  },
+  AppRole.member: {
+    AppPermission.viewHome,
+    AppPermission.give,
+    AppPermission.viewOwnGiving,
+    AppPermission.registerForEvents,
+    AppPermission.viewOwnSchedule,
+  },
+  AppRole.visitor: {
+    AppPermission.viewHome,
+    AppPermission.registerForEvents,
+  },
+};
