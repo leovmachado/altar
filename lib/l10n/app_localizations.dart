@@ -125,7 +125,7 @@ abstract class AppLocalizations {
   /// No description provided for @navSchedule.
   ///
   /// In en, this message translates to:
-  /// **'Schedule'**
+  /// **'Ministry'**
   String get navSchedule;
 
   /// No description provided for @navGiving.
@@ -161,7 +161,7 @@ abstract class AppLocalizations {
   /// No description provided for @navEscala.
   ///
   /// In en, this message translates to:
-  /// **'Escala'**
+  /// **'Ministry'**
   String get navEscala;
 
   /// No description provided for @navFinance.
@@ -557,7 +557,7 @@ abstract class AppLocalizations {
   /// No description provided for @scheduleTitle.
   ///
   /// In en, this message translates to:
-  /// **'Schedule'**
+  /// **'Ministry'**
   String get scheduleTitle;
 
   /// No description provided for @scheduleMyAssignments.
@@ -673,6 +673,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next time you serve'**
   String get scheduleNextServe;
+
+  /// No description provided for @ministryHubMyMinistries.
+  ///
+  /// In en, this message translates to:
+  /// **'My ministries'**
+  String get ministryHubMyMinistries;
+
+  /// No description provided for @ministryNextServeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re serving next'**
+  String get ministryNextServeTitle;
+
+  /// No description provided for @ministryServeDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{event} · {ministry} · {role}'**
+  String ministryServeDetail(String event, String ministry, String role);
+
+  /// No description provided for @ministryFullSchedule.
+  ///
+  /// In en, this message translates to:
+  /// **'My Full Schedule'**
+  String get ministryFullSchedule;
+
+  /// No description provided for @ministryLeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Leader'**
+  String get ministryLeader;
+
+  /// No description provided for @ministryYourRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Your role'**
+  String get ministryYourRole;
+
+  /// No description provided for @ministryMembersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} members'**
+  String ministryMembersCount(int count);
+
+  /// No description provided for @ministryUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming assignments'**
+  String get ministryUpcoming;
+
+  /// No description provided for @ministryAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get ministryAbout;
+
+  /// No description provided for @ministryResources.
+  ///
+  /// In en, this message translates to:
+  /// **'Resources'**
+  String get ministryResources;
+
+  /// No description provided for @ministryResourcesBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Team chat, training and files will live here.'**
+  String get ministryResourcesBody;
+
+  /// No description provided for @ministryNoUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming assignments'**
+  String get ministryNoUpcoming;
+
+  /// No description provided for @fullScheduleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Schedule'**
+  String get fullScheduleTitle;
+
+  /// No description provided for @scheduleTabList.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get scheduleTabList;
+
+  /// No description provided for @scheduleTabCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get scheduleTabCalendar;
+
+  /// No description provided for @scheduleScheduledLegend.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get scheduleScheduledLegend;
 
   /// No description provided for @givingTitle.
   ///

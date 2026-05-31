@@ -42,18 +42,27 @@ class Ministry {
     required this.name,
     required this.icon,
     this.role,
+    this.leaderName = '',
+    this.memberCount = 0,
+    this.description = '',
   });
 
   final String id;
   final String name;
   final IconData icon;
   final String? role; // the user's role within this ministry
+  final String leaderName;
+  final int memberCount;
+  final String description;
 
   factory Ministry.fromJson(Map<String, dynamic> json) => Ministry(
         id: json['id'] as String,
         name: json['name'] as String,
         icon: Icons.groups_rounded,
         role: json['role'] as String?,
+        leaderName: json['leader_name'] as String? ?? '',
+        memberCount: json['member_count'] as int? ?? 0,
+        description: json['description'] as String? ?? '',
       );
 }
 
@@ -187,6 +196,8 @@ class ScheduleAssignment {
     required this.location,
     required this.status,
     this.team = const [],
+    this.ministryId,
+    this.ministryName,
   });
 
   final String id;
@@ -196,6 +207,10 @@ class ScheduleAssignment {
   final String location;
   final ScheduleStatus status;
   final List<String> team;
+
+  /// The ministry/team this assignment belongs to (e.g. "Media Team").
+  final String? ministryId;
+  final String? ministryName;
 }
 
 @immutable

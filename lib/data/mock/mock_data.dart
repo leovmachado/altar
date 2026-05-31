@@ -12,12 +12,52 @@ class MockData {
   static DateTime _inDays(int d, {int hour = 19, int minute = 0}) =>
       DateTime(now.year, now.month, now.day + d, hour, minute);
 
-  // ---- Users (one per role-tailored dashboard) -----------------------------
+  // ---- Ministries the user belongs to --------------------------------------
   static const _ministries = [
-    Ministry(id: 'm1', name: 'Worship', icon: Icons.music_note_rounded, role: 'Vocalist'),
-    Ministry(id: 'm2', name: 'Welcome Team', icon: Icons.volunteer_activism_rounded, role: 'Greeter'),
-    Ministry(id: 'm3', name: 'Kids', icon: Icons.child_care_rounded, role: 'Helper'),
+    Ministry(
+      id: 'min-media',
+      name: 'Media Team',
+      icon: Icons.videocam_rounded,
+      role: 'Camera 1',
+      leaderName: 'Tobias Lindgren',
+      memberCount: 18,
+      description:
+          'We capture and broadcast every gathering — cameras, livestream, '
+          'lyrics and lighting — so the room and those at home stay connected.',
+    ),
+    Ministry(
+      id: 'min-worship',
+      name: 'Worship Team',
+      icon: Icons.music_note_rounded,
+      role: 'Vocalist',
+      leaderName: 'Priya Nair',
+      memberCount: 32,
+      description:
+          'Vocalists and musicians who lead the congregation in worship across '
+          'all weekend services and special nights.',
+    ),
+    Ministry(
+      id: 'min-kids',
+      name: 'Kids Ministry',
+      icon: Icons.child_care_rounded,
+      role: 'Helper',
+      leaderName: 'Sara Lin',
+      memberCount: 24,
+      description:
+          'A safe, fun and faith-filled environment for kids from nursery '
+          'through grade 5 every Sunday.',
+    ),
   ];
+
+  /// All ministries the demo user belongs to.
+  static List<Ministry> get ministries => _ministries;
+
+  static Ministry ministryById(String id) =>
+      _ministries.firstWhere((m) => m.id == id, orElse: () => _ministries.first);
+
+  /// Upcoming assignments for a given ministry.
+  static List<ScheduleAssignment> assignmentsForMinistry(String ministryId) =>
+      assignments.where((a) => a.ministryId == ministryId).toList();
 
   static const _family = [
     FamilyMember(id: 'f1', name: 'Ana Souza', relationship: 'Spouse'),
@@ -206,12 +246,14 @@ class MockData {
   static final List<ScheduleAssignment> assignments = [
     ScheduleAssignment(
       id: 's1',
-      eventTitle: 'Sunday Service · 9AM',
-      role: 'Vocalist',
+      eventTitle: 'Sunday Service',
+      role: 'Camera 1',
       startsAt: _inDays(2, hour: 9),
       location: 'Main Auditorium',
       status: ScheduleStatus.confirmed,
-      team: ['Priya Nair', 'Marcus Reed', 'Joy Adeyemi', 'Caleb Stone'],
+      ministryId: 'min-media',
+      ministryName: 'Media Team',
+      team: ['Tobias Lindgren', 'Marcus Reed', 'Joy Adeyemi'],
     ),
     ScheduleAssignment(
       id: 's2',
@@ -220,15 +262,19 @@ class MockData {
       startsAt: _inDays(6, hour: 18, minute: 30),
       location: 'Main Auditorium',
       status: ScheduleStatus.pending,
+      ministryId: 'min-worship',
+      ministryName: 'Worship Team',
       team: ['Priya Nair', 'Marcus Reed', 'Lia Fernandes'],
     ),
     ScheduleAssignment(
       id: 's3',
       eventTitle: 'Sunday Service · 11AM',
-      role: 'Greeter',
+      role: 'Camera 2',
       startsAt: _inDays(9, hour: 11),
-      location: 'Main Lobby',
+      location: 'Main Auditorium',
       status: ScheduleStatus.confirmed,
+      ministryId: 'min-media',
+      ministryName: 'Media Team',
       team: ['Marcus Reed', 'Tom Becker'],
     ),
     ScheduleAssignment(
@@ -238,7 +284,20 @@ class MockData {
       startsAt: _inDays(20, hour: 10),
       location: 'Kids Wing',
       status: ScheduleStatus.declined,
+      ministryId: 'min-kids',
+      ministryName: 'Kids Ministry',
       team: ['Marcus Reed', 'Sara Lin'],
+    ),
+    ScheduleAssignment(
+      id: 's5',
+      eventTitle: 'Sunday Service',
+      role: 'Vocalist',
+      startsAt: _inDays(16, hour: 9),
+      location: 'Main Auditorium',
+      status: ScheduleStatus.confirmed,
+      ministryId: 'min-worship',
+      ministryName: 'Worship Team',
+      team: ['Priya Nair', 'Marcus Reed'],
     ),
   ];
 

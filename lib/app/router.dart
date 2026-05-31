@@ -10,9 +10,11 @@ import '../features/events/event_detail_screen.dart';
 import '../features/events/events_screen.dart';
 import '../features/giving/giving_screen.dart';
 import '../features/home/home_screen.dart';
+import '../features/ministry/ministry_detail_screen.dart';
+import '../features/ministry/ministry_hub_screen.dart';
 import '../features/placeholders/placeholder_screens.dart';
 import '../features/profile/profile_screen.dart';
-import '../features/schedule/schedule_screen.dart';
+import '../features/schedule/full_schedule_screen.dart';
 import '../features/settings/settings_screen.dart';
 import 'auth_controller.dart';
 
@@ -48,6 +50,21 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (_, state) =>
             EventDetailScreen(eventId: state.pathParameters['id'] ?? ''),
       ),
+      // Full Schedule (list + calendar) — pushed full-screen from the Ministry hub.
+      GoRoute(
+        path: Routes.fullSchedule,
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) => FullScheduleScreen(
+          initialTab: state.uri.queryParameters['tab'] == 'calendar' ? 1 : 0,
+        ),
+      ),
+      // Ministry detail — pushed full-screen from the Ministry hub.
+      GoRoute(
+        path: Routes.ministryDetail,
+        parentNavigatorKey: _rootKey,
+        builder: (_, state) =>
+            MinistryDetailScreen(ministryId: state.pathParameters['id'] ?? ''),
+      ),
       ShellRoute(
         navigatorKey: _shellKey,
         builder: (context, state, child) =>
@@ -60,7 +77,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(path: Routes.events, builder: (_, _) => const EventsScreen()),
           GoRoute(
               path: Routes.schedule,
-              builder: (_, _) => const ScheduleScreen()),
+              builder: (_, _) => const MinistryHubScreen()),
           GoRoute(path: Routes.giving, builder: (_, _) => const GivingScreen()),
           GoRoute(
               path: Routes.profile, builder: (_, _) => const ProfileScreen()),

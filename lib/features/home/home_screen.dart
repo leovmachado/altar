@@ -24,9 +24,7 @@ class HomeScreen extends ConsumerWidget {
     final sections = <Widget>[
       _GreetingHeader(user: user),
       if (canServe) _ServingBanner(assignment: nextAssignment),
-      const _QuickActions(),
       const _SpecialEvents(),
-      _GivingCard(user: user),
       const _Announcements(),
     ];
 
@@ -113,155 +111,73 @@ class _ServingBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
+    final altar = context.altar;
     final loc = Localizations.localeOf(context).toString();
     final dateLabel = DateFormat.MMMEd(loc).format(assignment.startsAt);
 
+    // Slim, subtle alert — compact vertical padding, a soft teal tint and a
+    // single tap target (the whole banner) leading to the assignment.
     return GlassCard(
-      glow: true,
-      padding: const EdgeInsets.all(AppSpacing.lg),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
         colors: [
-          AppColors.teal.withValues(alpha: 0.16),
-          AppColors.aqua.withValues(alpha: 0.08),
+          AppColors.teal.withValues(alpha: 0.10),
+          AppColors.aqua.withValues(alpha: 0.04),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      onTap: () => context.go(Routes.schedule),
+      child: Row(
         children: [
-          Row(
-            children: [
-              const Icon(Icons.volunteer_activism,
-                  color: AppColors.teal, size: 22),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: Text(
-                  l10n.homeServingTitle,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.xs),
+            decoration: BoxDecoration(
+              color: AppColors.teal.withValues(alpha: 0.14),
+              borderRadius: AppRadii.brSm,
+            ),
+            child: const Icon(Icons.event_available_rounded,
+                color: AppColors.teal, size: 18),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  l10n.scheduleNextServe,
+                  style: theme.textTheme.labelSmall?.copyWith(
+                    color: altar.inkSecondary,
+                    letterSpacing: 0.3,
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            l10n.homeServingBody(
-              assignment.role,
-              assignment.eventTitle,
-              dateLabel,
-            ),
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: context.altar.inkSecondary,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: AltarButton(
-              label: l10n.homeServingCta,
-              variant: AltarButtonVariant.ghost,
-              icon: Icons.calendar_month,
-              onPressed: () => context.go(Routes.schedule),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _QuickActions extends StatelessWidget {
-  const _QuickActions();
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-
-    final actions = <_QuickAction>[
-      _QuickAction(
-        icon: Icons.favorite,
-        label: l10n.homeQuickGive,
-        onTap: () => context.go(Routes.giving),
-      ),
-      _QuickAction(
-        icon: Icons.qr_code_scanner,
-        label: l10n.homeQuickCheckIn,
-        onTap: () {},
-      ),
-      _QuickAction(
-        icon: Icons.event,
-        label: l10n.homeQuickEvents,
-        onTap: () => context.go(Routes.events),
-      ),
-      _QuickAction(
-        icon: Icons.calendar_month,
-        label: l10n.homeQuickSchedule,
-        onTap: () => context.go(Routes.schedule),
-      ),
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionHeader(title: l10n.homeQuickActions),
-        const SizedBox(height: AppSpacing.sm),
-        LayoutBuilder(
-          builder: (context, constraints) {
-            const gap = AppSpacing.sm;
-            final cardWidth = (constraints.maxWidth - gap * 3) / 4;
-            return Wrap(
-              spacing: gap,
-              runSpacing: gap,
-              children: [
-                for (final a in actions)
-                  SizedBox(
-                    width: cardWidth.clamp(120.0, 220.0),
-                    child: a,
-                  ),
+                const SizedBox(height: 2),
+                Text(
+                  '${assignment.role} • ${assignment.eventTitle}',
+                  style: theme.textTheme.titleSmall
+                      ?.copyWith(fontWeight: FontWeight.w700),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 1),
+                Text(
+                  dateLabel,
+                  style: theme.textTheme.bodySmall
+                      ?.copyWith(color: altar.inkTertiary),
+                ),
               ],
-            );
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class _QuickAction extends StatelessWidget {
-  const _QuickAction({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return GlassCard(
-      onTap: onTap,
-      padding: const EdgeInsets.symmetric(
-        vertical: AppSpacing.md,
-        horizontal: AppSpacing.sm,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: AppColors.teal, size: 26),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: theme.textTheme.labelLarge?.copyWith(
-              fontWeight: FontWeight.w600,
             ),
+          ),
+          const SizedBox(width: AppSpacing.xs),
+          // Compact "view assignment" affordance.
+          Tooltip(
+            message: l10n.homeServingCta,
+            child: Icon(Icons.chevron_right_rounded,
+                color: altar.inkTertiary, size: 22),
           ),
         ],
       ),
@@ -384,71 +300,6 @@ class _EventPosterCard extends StatelessWidget {
   }
 }
 
-class _GivingCard extends StatelessWidget {
-  const _GivingCard({required this.user});
-
-  final UserProfile user;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final amount = NumberFormat.currency(symbol: '\$', decimalDigits: 0)
-        .format(user.givenThisMonthCents / 100);
-
-    return GlassCard(
-      glow: true,
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      gradient: const LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: AppColors.brandGradient,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.favorite, color: Colors.white, size: 22),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: Text(
-                  l10n.homeGivingCardTitle,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            l10n.homeGivingCardSubtitle,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: Colors.white.withValues(alpha: 0.85),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Text(
-            amount,
-            style: theme.textTheme.displaySmall?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AltarButton(
-            label: l10n.homeGivingCardCta,
-            variant: AltarButtonVariant.secondary,
-            icon: Icons.volunteer_activism,
-            onPressed: () => context.go(Routes.giving),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class _Announcements extends StatelessWidget {
   const _Announcements();

@@ -21,7 +21,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get navEvents => 'Eventos';
 
   @override
-  String get navSchedule => 'Escala';
+  String get navSchedule => 'Ministério';
 
   @override
   String get navGiving => 'Doações';
@@ -39,7 +39,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get navVisitorLeads => 'Visitantes';
 
   @override
-  String get navEscala => 'Escala';
+  String get navEscala => 'Ministério';
 
   @override
   String get navFinance => 'Finanças';
@@ -246,7 +246,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get scheduleTitle => 'Escala';
+  String get scheduleTitle => 'Servir';
 
   @override
   String get scheduleMyAssignments => 'Minhas escalas';
@@ -305,6 +305,59 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get scheduleNextServe => 'Próxima vez que você serve';
+
+  @override
+  String get ministryHubMyMinistries => 'Meus ministérios';
+
+  @override
+  String get ministryNextServeTitle => 'Você serve em breve';
+
+  @override
+  String ministryServeDetail(String event, String ministry, String role) {
+    return '$event · $ministry · $role';
+  }
+
+  @override
+  String get ministryFullSchedule => 'Minha escala completa';
+
+  @override
+  String get ministryLeader => 'Líder';
+
+  @override
+  String get ministryYourRole => 'Sua função';
+
+  @override
+  String ministryMembersCount(int count) {
+    return '$count membros';
+  }
+
+  @override
+  String get ministryUpcoming => 'Próximas escalas';
+
+  @override
+  String get ministryAbout => 'Sobre';
+
+  @override
+  String get ministryResources => 'Recursos';
+
+  @override
+  String get ministryResourcesBody =>
+      'Chat da equipe, treinamentos e arquivos ficarão aqui.';
+
+  @override
+  String get ministryNoUpcoming => 'Nenhuma escala futura';
+
+  @override
+  String get fullScheduleTitle => 'Minha escala';
+
+  @override
+  String get scheduleTabList => 'Lista';
+
+  @override
+  String get scheduleTabCalendar => 'Calendário';
+
+  @override
+  String get scheduleScheduledLegend => 'Escalado';
 
   @override
   String get givingTitle => 'Doações';

@@ -10,7 +10,11 @@ class Routes {
   static const dashboard = '/dashboard';
   static const events = '/events';
   static const eventDetail = '/events/:id'; // param: id
+  // The primary tab is the Ministry hub. The path keeps the `schedule` name
+  // internally (routing/feature code is unchanged); only the label is "Ministry".
   static const schedule = '/schedule';
+  static const fullSchedule = '/full-schedule'; // pushed: list + calendar
+  static const ministryDetail = '/ministry/:id'; // param: id
   static const giving = '/giving';
   static const profile = '/profile';
   static const people = '/people';
@@ -21,6 +25,7 @@ class Routes {
   static const settings = '/settings';
 
   static String eventDetailFor(String id) => '/events/$id';
+  static String ministryDetailFor(String id) => '/ministry/$id';
 }
 
 /// A destination shown in the mobile bottom bar or desktop side rail.
@@ -43,7 +48,11 @@ class NavDestination {
   final AppPermission? requires;
 }
 
-/// Mobile bottom-nav: Home · Events · Schedule · Giving · Profile.
+/// Mobile bottom-nav: Home · Events · Serving · Profile.
+///
+/// Giving is intentionally NOT in the primary navigation for now. Its route
+/// (`Routes.giving`) and screen still exist as a hidden placeholder and remain
+/// reachable from in-app cards.
 final List<NavDestination> kMobileDestinations = [
   NavDestination(
     path: Routes.home,
@@ -59,15 +68,9 @@ final List<NavDestination> kMobileDestinations = [
   ),
   NavDestination(
     path: Routes.schedule,
-    icon: Icons.calendar_month_outlined,
-    selectedIcon: Icons.calendar_month_rounded,
+    icon: Icons.diversity_3_outlined,
+    selectedIcon: Icons.diversity_3_rounded,
     labelFor: (l) => l.navSchedule,
-  ),
-  NavDestination(
-    path: Routes.giving,
-    icon: Icons.favorite_outline_rounded,
-    selectedIcon: Icons.favorite_rounded,
-    labelFor: (l) => l.navGiving,
   ),
   NavDestination(
     path: Routes.profile,
@@ -77,8 +80,9 @@ final List<NavDestination> kMobileDestinations = [
   ),
 ];
 
-/// Desktop side rail: Dashboard · People · Visitor Leads · Events · Escala ·
+/// Desktop side rail: Dashboard · People · Visitor Leads · Events · Serving ·
 /// Finance · Media · Reports · Settings. Each gated by a permission.
+/// (Giving is intentionally omitted from the primary navigation for now.)
 final List<NavDestination> kDesktopDestinations = [
   NavDestination(
     path: Routes.dashboard,
@@ -108,8 +112,8 @@ final List<NavDestination> kDesktopDestinations = [
   ),
   NavDestination(
     path: Routes.schedule,
-    icon: Icons.calendar_month_outlined,
-    selectedIcon: Icons.calendar_month_rounded,
+    icon: Icons.diversity_3_outlined,
+    selectedIcon: Icons.diversity_3_rounded,
     labelFor: (l) => l.navEscala,
   ),
   NavDestination(

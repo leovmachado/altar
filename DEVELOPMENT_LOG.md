@@ -63,6 +63,56 @@ and UX before any backend work.
 - Buttons like "Register", "Give now", "Confirm/Decline", "Publish schedule"
   are visual/placeholder — no persistence or network.
 
+## 2026-05-30 — Phase 1A quick UI/navigation fixes
+
+- **Mobile login no longer scrolls.** Compact spacing on phones + an adaptive
+  layout (`LayoutBuilder` + `ConstrainedBox(minHeight)` + `ClampingScrollPhysics`)
+  so the card centers and fits a normal iPhone viewport (verified
+  `maxScrollExtent == 0` on iPhone 14/15/16/Pro Max) while still scrolling as an
+  overflow safety net on tiny devices / when the keyboard is open (0 overflow
+  errors everywhere). Desktop login unchanged. File: `features/auth/login_screen.dart`.
+- **Removed Quick Actions from Home.** Deleted the `_QuickActions`/`_QuickAction`
+  widgets and their use; all other Home sections kept (serving banner, special
+  events, giving/generosity card, announcements). File: `features/home/home_screen.dart`.
+- **Removed Giving from primary navigation.** Dropped the Giving destination from
+  the mobile bottom bar (now Home · Events · Serving · Profile). Desktop rail never
+  contained Giving. The `/giving` route + screen remain as a hidden placeholder
+  reachable from in-app cards. File: `core/navigation/routes.dart`.
+- **Renamed the "Schedule" / "Escala" nav label to "Serving"** (EN `Serving`,
+  PT `Servir`) across the mobile bar, desktop rail, page titles, and the
+  dashboard's schedule button. Routes, folders, and internal `schedule`
+  terminology intentionally unchanged. Files: `l10n/app_en.arb`, `l10n/app_pt.arb`
+  (regenerated `AppLocalizations`).
+- Verified: `flutter analyze` clean, widget tests pass, dedicated probe tests
+  (since removed) confirmed nav composition + no-scroll, and screenshots re-captured.
+
+## 2026-05-31 — Ministry hub restructure
+
+- **Renamed the primary tab "Serving" → "Ministry"** (EN `Ministry`, PT `Ministério`)
+  across the mobile bar, desktop rail, page title and the dashboard button;
+  swapped the tab icon to `diversity_3`. Routes/folders/internal `schedule`
+  terminology unchanged. Files: `l10n/app_en.arb`, `l10n/app_pt.arb`,
+  `core/navigation/routes.dart`.
+- **Ministry tab is now a hub** (`features/ministry/ministry_hub_screen.dart`):
+  a slim "you're serving next" strip, a clickable list of the user's ministries,
+  and a prominent **My Full Schedule** button.
+- **New Ministry detail page** (`features/ministry/ministry_detail_screen.dart`,
+  pushed `/ministry/:id`): name, leader, member count, your role, upcoming
+  assignments, About, and placeholder Resources.
+- **Full Schedule page** (`features/schedule/full_schedule_screen.dart`, pushed
+  `/full-schedule`, replaces the old `schedule_screen.dart`): **List** tab
+  (assignment cards + availability + leader editor — reused from the old screen)
+  and a **Calendar** tab with a hand-built month grid that **highlights
+  scheduled days in the Altar teal/green** + a legend. Tab is deep-linkable via
+  `?tab=calendar`.
+- **Data:** `Ministry` gained `leaderName` / `memberCount` / `description`;
+  `ScheduleAssignment` gained `ministryId` / `ministryName`; mock ministries are
+  now Media Team / Worship Team / Kids Ministry with `MockData.ministries`,
+  `ministryById`, `assignmentsForMinistry` helpers.
+- Verified: `flutter analyze` clean, widget tests pass, probe tests confirmed the
+  nav label, hub/detail content, and calendar highlighting (caught + fixed a
+  32px `StatusBadge` overflow in the detail header), screenshots captured.
+
 ### Next phase (not started)
 - Connect Supabase (auth + Postgres + storage), migrations, then build People,
   Visitor Leads, scheduling logic, finance, and integrations.

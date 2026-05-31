@@ -21,7 +21,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navEvents => 'Events';
 
   @override
-  String get navSchedule => 'Schedule';
+  String get navSchedule => 'Ministry';
 
   @override
   String get navGiving => 'Giving';
@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navVisitorLeads => 'Visitor Leads';
 
   @override
-  String get navEscala => 'Escala';
+  String get navEscala => 'Ministry';
 
   @override
   String get navFinance => 'Finance';
@@ -246,7 +246,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get scheduleTitle => 'Schedule';
+  String get scheduleTitle => 'Ministry';
 
   @override
   String get scheduleMyAssignments => 'My assignments';
@@ -305,6 +305,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get scheduleNextServe => 'Next time you serve';
+
+  @override
+  String get ministryHubMyMinistries => 'My ministries';
+
+  @override
+  String get ministryNextServeTitle => 'You\'re serving next';
+
+  @override
+  String ministryServeDetail(String event, String ministry, String role) {
+    return '$event · $ministry · $role';
+  }
+
+  @override
+  String get ministryFullSchedule => 'My Full Schedule';
+
+  @override
+  String get ministryLeader => 'Leader';
+
+  @override
+  String get ministryYourRole => 'Your role';
+
+  @override
+  String ministryMembersCount(int count) {
+    return '$count members';
+  }
+
+  @override
+  String get ministryUpcoming => 'Upcoming assignments';
+
+  @override
+  String get ministryAbout => 'About';
+
+  @override
+  String get ministryResources => 'Resources';
+
+  @override
+  String get ministryResourcesBody =>
+      'Team chat, training and files will live here.';
+
+  @override
+  String get ministryNoUpcoming => 'No upcoming assignments';
+
+  @override
+  String get fullScheduleTitle => 'My Schedule';
+
+  @override
+  String get scheduleTabList => 'List';
+
+  @override
+  String get scheduleTabCalendar => 'Calendar';
+
+  @override
+  String get scheduleScheduledLegend => 'Scheduled';
 
   @override
   String get givingTitle => 'Giving';
